@@ -152,6 +152,12 @@
   border-radius: 4px;
   border: 1px solid #e7e7eb;
 }
+.search-cont input:focus-visble,
+.search-cont input:focus-within,
+.search-cont input:focus{
+  border:1px solid #0d6efd;
+}
+
 .sort-ddn {
   border: 1px solid #d0d1d9;
   width: 145px;
@@ -333,6 +339,7 @@
 }
 .modal {
   --bs-modal-width: 90% !important;
+  background:#000000d1;
 }
 .modal-header {
   justify-content: space-between;

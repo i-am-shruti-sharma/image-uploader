@@ -36,11 +36,14 @@ const AssetDrawer = ({
   const [rotation, setRotation] = useState(0);
   const [showGrid, setShowGrid] = useState(false);
   const [cropperKey, setCropperKey] = useState(0); 
-  const [edtiId, setEditId] = useState(-1);
-
+  const [edtiId, setEditId] = useState(-1); 
+  const [disable,setDisable]=useState({
+    uploadBtn:false,
+    cropBtn:false
+  });
   useEffect(() => {
-    if (currFile?.title) {
-      setTitle(currFile?.title);
+    if (currFile?.name) {
+      setTitle(currFile?.name);
     }
     if (currFile?.tags) {
       setTagList(currFile?.tags);
@@ -74,7 +77,12 @@ const AssetDrawer = ({
 
   // Crop and upload the image
   const handleCrop = async (final = false) => {
+
     if (cropperRef.current) {
+        setDisable({
+            uploadBtn:false,
+            cropBtn:true
+        });
       const croppedCanvas = cropperRef.current.cropper.getCroppedCanvas();
 
       // Convert the canvas to a Blob
@@ -107,6 +115,10 @@ const AssetDrawer = ({
             // Set the updated URL
             setCurrFile(file); // Use `secure_url` for the uploaded image
             toggleGrid();
+            setDisable({
+                uploadBtn:false,
+                cropBtn:false
+            });
             if (final == true) {
               uploadFile(data.secure_url);
             }
@@ -123,6 +135,10 @@ const AssetDrawer = ({
   };
 
   const uploadFile = async (file) => {
+    setDisable({
+        uploadBtn:true,
+        cropBtn:false
+    });
     if (mode == "add") {
       await addDoc(collection(db, "images"), {
         url: file ? file : currFile.url,
@@ -146,7 +162,10 @@ const AssetDrawer = ({
           currFile.favourite !== undefined ? currFile.favourite : false, // Default to false if undefined
         hide: currFile.hide !== undefined ? currFile.hide : false,
       });
-
+      setDisable({
+        uploadBtn:false,
+        cropBtn:false
+        });
       setMode("add");
     }
 
@@ -246,7 +265,7 @@ const AssetDrawer = ({
                     <div className="icon" onClick={toggleGrid}>
                       <CloseIcon sx={{ color: "#334D6E", fontSize: 20 }} />
                     </div>
-                    <div className="icon" onClick={handleCrop}>
+                    <div className="icon" onClick={ !disable.cropBtn && handleCrop}>
                       <DoneIcon sx={{ color: "#334D6E", fontSize: 20 }} />
                     </div>
                   </div>
@@ -285,7 +304,7 @@ const AssetDrawer = ({
                   />
                   <TagInput setTagList={setTagList} tagList={tagList} />
                 </div>
-                <button onClick={(e) => handleCrop(true)}>
+                <button onClick={(e) => handleCrop(true)} disabled={disable.uploadBtn}>
                   <UploadIcon />
                   Upload Image
                 </button>

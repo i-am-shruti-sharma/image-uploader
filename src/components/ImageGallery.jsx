@@ -8,7 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import uploadImg from './../assets/upload.png';
-// import { Snackbar } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdit,setMode}) => {
 
     const [search,setSearch]=useState('');
@@ -46,41 +46,54 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
     };
     
     useEffect(() => {
-        setAlert({
-            message:'Added file successfully!',
-            open:true
-        });
+        if(refresh){
+            setAlert({
+                message:'Updated file successfully!',
+                open:true
+            });
+        }
         fetchImages();
         setRefresh(false);
     }, [refresh])
 
     useEffect(() => {
-        if(!search?.length){
+        const handler = setTimeout(() => {
+            updateSearch(search);
+          }, 500);
+        return () => {
+            clearTimeout(handler);
+          };
+       
+    }, [search])
+
+    const updateSearch=(search)=>{
+        if(search?.length == 0){
             setImages(mainStore);
             return;
         }
-         // Flatten the 2D array into a 1D array
-        const flatImages = mainStore.flat();
+        else{
+            // Flatten the 2D array into a 1D array
+            const flatImages = mainStore.flat();
 
-        // Filter images based on the search query
-        let imgDummy=[[],[],[],[]];
-        const results = flatImages.filter((image) =>
-            image?.name?.toLowerCase()?.includes(search?.toLowerCase())
-        )
-        if(!results?.length){
-            setnoData(true);
-        }else{
-            setnoData(false);
-        }
-        results.forEach((item, index) => {
-            if(!item?.hide){
-                const rowIndex = index % 4; 
-                imgDummy[rowIndex].push(item);
+            // Filter images based on the search query
+            let imgDummy=[[],[],[],[]];
+            const results = flatImages.filter((image) =>
+                image?.name?.toLowerCase()?.includes(search?.toLowerCase())
+            )
+            if(!results?.length){
+                setnoData(true);
+            }else{
+                setnoData(false);
             }
-        });
-        setImages(imgDummy);
-    }, [search])
-
+            results.forEach((item, index) => {
+                if(!item?.hide){
+                    const rowIndex = index % 4; 
+                    imgDummy[rowIndex].push(item);
+                }
+            });
+            setImages(imgDummy);
+        }
+    }
     const handleAddClick=(e)=>{
         e?.preventDefault();
         const fileInput = document.getElementById("fileInput");
@@ -93,6 +106,7 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
         setExpandEdit(true);
         setCurrFile(file);
         setMode('edit');
+        setExpandEditModal(-1);
     }
 
     const hide =async(file)=>{
@@ -112,6 +126,8 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
                 open:true
             });
             fetchImages();
+            setExpandEditModal(-1);
+
         } catch (error) {
             setAlert({
                 message:'Something went wrong!',
@@ -133,6 +149,8 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
             message:'Selected file deleted successfully!',
             open:true
         })
+        setExpandEditModal(-1);
+
         } catch (error) {
             setAlert({
                 message:'Something went wrong!',
@@ -302,11 +320,13 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
         }
        
     </div>
-        {/* <Snackbar
+        <Snackbar
         open={alert.open}
         autoHideDuration={3000}
         message={alert.message}
-        /> */}
+        onClose={e=>setAlert({open:false,message:''})} // Handles closing of the Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }} 
+        />
     </>
   )
 }
