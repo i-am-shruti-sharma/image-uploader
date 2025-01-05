@@ -280,6 +280,7 @@ const ImageGallery = ({
                     <input
                       type="radio"
                       name="sort"
+                      checked={sortValue == 'Newest First'}
                       id="Newest First"
                       value="Newest First"
                       onClick={(e) => setSortValue("Newest First")}
@@ -290,6 +291,7 @@ const ImageGallery = ({
                     <input
                       type="radio"
                       name="sort"
+                      checked={sortValue == 'Oldest First'}
                       id="Oldest First"
                       value="Oldest First"
                       onClick={(e) => setSortValue("Oldest First")}
@@ -300,6 +302,7 @@ const ImageGallery = ({
                     <input
                       type="radio"
                       name="sort"
+                      checked={sortValue == 'A-Z'}
                       id="A-Z"
                       value="A-Z"
                       onClick={(e) => setSortValue("A-Z")}

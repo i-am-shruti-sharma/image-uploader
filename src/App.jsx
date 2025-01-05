@@ -11,6 +11,7 @@ import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
 import { AdvancedImage } from '@cloudinary/react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
 
 function App() {
   const [currFile,setCurrFile]=useState({
@@ -26,7 +27,10 @@ function App() {
   const [expandEdit,setExpandEdit]=useState(false);
   const [refresh,setRefresh]=useState(false);
   const [mode,setMode]=useState('add');
-
+  const [alert, setAlert] = useState({
+    message: "",
+    open: false,
+  });
     // Handle file selection
     const handleFileChange = (event) => {
       const file = event.target.files[0];
@@ -38,6 +42,10 @@ function App() {
     };
     const handleUpload = async (image) => {
       if (!image) return;
+      setAlert({
+        message:"Image is uploading.. It may take some time!",
+        open:true
+      });
       const cld = new Cloudinary({ cloud_name: 'doi4m7trz' });
   
       const formData = new FormData();
@@ -119,7 +127,13 @@ function App() {
           {/* Default Redirect to Home */}
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
-      
+       <Snackbar
+        open={alert.open}
+        autoHideDuration={4000}
+        message={alert.message}
+        onClose={(e) => setAlert({ open: false, message: "" })} 
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      />
     </>
   )
 }
