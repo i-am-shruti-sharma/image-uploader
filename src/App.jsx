@@ -104,6 +104,7 @@ function App() {
           handleButtonClick={handleButtonClick}
           setMode={setMode}
           mode={mode}
+          setAlert={setAlert}
         />
       )}
 
@@ -121,7 +122,7 @@ function App() {
           {/* Gallery Route */}
           <Route
             path="/gallery"
-            element={<ImageGallery setMode={setMode} setCurrFile={setCurrFile} setExpandEdit={setExpandEdit} setActivePage={setActivePage} refresh={refresh} setRefresh={setRefresh}/>}
+            element={<ImageGallery setAlert={setAlert} setMode={setMode} setCurrFile={setCurrFile} setExpandEdit={setExpandEdit} setActivePage={setActivePage} refresh={refresh} setRefresh={setRefresh}/>}
           />
 
           {/* Default Redirect to Home */}

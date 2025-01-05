@@ -24,6 +24,7 @@ const AssetDrawer = ({
   handleButtonClick,
   mode,
   setMode,
+  setAlert
 }) => {
   const [title, setTitle] = useState("Untitled");
   const [expandOptions, setExpandOptions] = useState(false);
@@ -81,6 +82,10 @@ const AssetDrawer = ({
         setDisable({
             uploadBtn:false,
             cropBtn:true
+        });
+        setAlert({
+            message:"Saving cropped image. It may take time!",
+            open:'true'
         });
       const croppedCanvas = cropperRef.current.cropper.getCroppedCanvas();
 

@@ -13,7 +13,6 @@ import {
 } from "firebase/firestore";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import uploadImg from "./../assets/upload.png";
-import Snackbar from "@mui/material/Snackbar";
 import ImageCard from "./ImageCard";
 const ImageGallery = ({
   setActivePage,
@@ -22,6 +21,7 @@ const ImageGallery = ({
   setCurrFile,
   setExpandEdit,
   setMode,
+  setAlert
 }) => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState(false);
@@ -30,10 +30,6 @@ const ImageGallery = ({
   const [noData, setnoData] = useState(false);
   const [expandEdit, setExpandEditModal] = useState(-1);
   const [sortValue, setSortValue] = useState("Newest First");
-  const [alert, setAlert] = useState({
-    message: "",
-    open: false,
-  });
 
   const fetchImages = async () => {
     try {
@@ -407,13 +403,6 @@ const ImageGallery = ({
           </div>
         )}
       </div>
-      <Snackbar
-        open={alert.open}
-        autoHideDuration={3000}
-        message={alert.message}
-        onClose={(e) => setAlert({ open: false, message: "" })} 
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      />
     </>
   );
 };
