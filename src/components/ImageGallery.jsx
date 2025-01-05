@@ -17,10 +17,10 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
     const [mainStore,setmainStore]=useState([[],[],[],[]]);
     const [noData,setnoData]=useState(false);
     const [expandEdit,setExpandEditModal]=useState(-1);
-    // const [alert,setAlert]=useState({
-    //     message:'',
-    //     open:false
-    // });
+    const [alert,setAlert]=useState({
+        message:'',
+        open:false
+    });
 
     const fetchImages = async () => {
         try {
