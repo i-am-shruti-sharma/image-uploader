@@ -57,13 +57,14 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
     }, [refresh])
 
     useEffect(() => {
-        const handler = setTimeout(() => {
-            updateSearch(search);
-          }, 500);
-        return () => {
-            clearTimeout(handler);
-          };
-       
+        if( mainStore.flat()?.length){
+            const handler = setTimeout(() => {
+                updateSearch(search);
+              }, 500);
+            return () => {
+                clearTimeout(handler);
+              };
+        }
     }, [search])
 
     const updateSearch=(search)=>{
@@ -172,7 +173,7 @@ const ImageGallery = ({setActivePage,refresh,setRefresh,setCurrFile,setExpandEdi
                 hide: file.hide !== undefined ? file.hide : false, // Default to false if undefined
             });
             setAlert({
-                message:'Added to favourite!',
+                message:file.favourite ? 'Added to favourites!' : 'Removed from favourites!',
                 open:true
             })
             fetchImages();

@@ -265,7 +265,7 @@ const AssetDrawer = ({
                     <div className="icon" onClick={toggleGrid}>
                       <CloseIcon sx={{ color: "#334D6E", fontSize: 20 }} />
                     </div>
-                    <div className="icon" onClick={ !disable.cropBtn && handleCrop}>
+                    <div className="icon" onClick={ e=>{!disable.cropBtn && handleCrop()}}>
                       <DoneIcon sx={{ color: "#334D6E", fontSize: 20 }} />
                     </div>
                   </div>
