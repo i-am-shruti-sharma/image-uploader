@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import tagImg from './../assets/shoppingmode.svg';
 import { Close } from "@mui/icons-material";
 const TagInput = ({setTagList,tagList}) => {
-  const [inputValue, setInputValue] = useState(""); // Current input
+  const [inputValue, setInputValue] = useState(""); 
 
-  // Add a tag when "Enter" is pressed
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
       event.preventDefault();
-      setTagList([...tagList, inputValue.trim()]); // Add new tag
-      setInputValue(""); // Clear input
+      setTagList([...tagList, inputValue.trim()]); 
+      setInputValue(""); 
     }
   };
 
-  // Remove a tag when clicked
   const removeTag = (index) => {
-    setTagList(tagList.filter((_, i) => i !== index)); // Remove tag at index
+    setTagList(tagList.filter((_, i) => i !== index)); 
   };
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import home from './../assets/home.png';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-const Home = ({setCurrFile,setActivePage,handleButtonClick}) => {
+const Home = ({handleButtonClick}) => {
   return (
     <>
       <div className='home d-flex align-items-center justify-content-center full-height'>

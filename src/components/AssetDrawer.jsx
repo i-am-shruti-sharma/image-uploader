@@ -9,7 +9,6 @@ import UploadIcon from "@mui/icons-material/Upload";
 import { db } from "./../../firebase.config";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-// import Cropper from 'react-easy-crop'
 import DoneIcon from "@mui/icons-material/Done";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -278,20 +277,19 @@ const AssetDrawer = ({
                     maxWidth: "100%",
                     height: "100%",
                   }}
-                  // Aspect ratio for cropping
                   guides={showGrid}
                   dragMode={showGrid ? "crop" : "none"}
                   ref={cropperRef}
-                  cropBoxMovable={showGrid} // Show/hide crop box
+                  cropBoxMovable={showGrid}
                   cropBoxResizable={showGrid}
                   viewMode={showGrid ? 0 : 1}
                   ready={() => {
                     const cropper = cropperRef.current?.cropper;
                     if (cropper) {
-                      cropper.clear(); // Clear the crop box initially
+                      cropper.clear();
                     }
                   }}
-                  toggleDragModeOnDblclick={showGrid} // Prevent enabling crop box on double-click
+                  toggleDragModeOnDblclick={showGrid} 
                 />
               </div>
               <div className="opts d-flex flex-column justify-content-between">
